@@ -32,3 +32,21 @@ type Readonly<T> = {
   readonly [P in keyof T]: T[P]
 }
 ```
+
+## 元组相关操作
+
+声明一个元组类型：
+
+```ts
+type tuple = ['t1', 't2', 't3']
+```
+
+获取元组长度：
+```ts
+type l = tuple['length']
+```
+
+获取元组每个值做为类型：
+```ts
+type t = tuple[number]
+```
