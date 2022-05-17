@@ -1,5 +1,5 @@
 export type MyExclude<T, U> = T extends U ? never : T;
 
-type T = 'name' | 'age'
+type T = 'name' | 'age' | 'id'
 
-type TE = MyExclude<T, 'name'>
+type TE = MyExclude<T, 'name' | 'id'>

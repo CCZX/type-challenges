@@ -1,5 +1,5 @@
 ## keyof 操作符
-可以获取一个类型的所有 key
+索引类型查询操作符，可以获取一个类型的所有公开属性，并将这些属性返回一个联合类型
 
 exp:
 ```ts
@@ -9,18 +9,59 @@ interface User {
 }
 
 type TUser = keyof User // type TUser = 'name' | 'age'
-
-interface Animal {
-  name: string
-  type: string
-}
-
-type TAnimal = keyof Animal // type TUser = 'name' | 'type'
 ```
 
-## in 操作符
+keyof 在我们限制类型或者枚举属性时还是非常常见的，比如下面这个小例子：
+```ts
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+    return obj[key];
+}
+```
+复制代码这样当我们尝试获取不在目标对象上的属性值时，TS会为我们检查到这样简单的错误
+`T[K]` 在TS里称作索引访问操作符（`indexed access operator`）。它可以为我们准确解析目标对象上的对应属性的正确类型。
 
-判断属性是否在一个类型`（'string | number | symbol'）`中。
+在下面的介绍，我们可以继续看到 `keyof` 的应用。
+
+
+## in 关键字
+
+用于遍历目标类型的公开属性名，类似于 `for...in` 操作。一般用于联合类型或者枚举类型
+
+**联合类型：**
+```ts
+type Union = 'age' | 'name' | 'id'
+
+type UnionIn = {
+  [key in Union]: string
+}
+
+// 相当于 ===>
+type UnionIn = {
+  age: string
+  name: string
+  id: string
+}
+```
+
+**枚举类型：**
+```ts
+enum Letter {
+  A,
+  B,
+  C,
+}
+
+type EnumIn = {
+  [key in EnumIn]: string
+}
+
+// 相当于 ===> 
+type EnumIn = {
+  0: string
+  1: string
+  2: string
+}
+```
 
 
 ## 循环
