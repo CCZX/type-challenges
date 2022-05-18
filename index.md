@@ -1,7 +1,6 @@
 ## keyof 操作符
-索引类型查询操作符，可以获取一个类型的所有公开属性，并将这些属性返回一个联合类型
+索引类型查询操作符，可以获取一个类型的所有公开属性，并将这些属性返回一个联合类型，比如：
 
-exp:
 ```ts
 interface User {
   name: string
@@ -63,16 +62,34 @@ type EnumIn = {
 }
 ```
 
+## extends
 
-## 循环
+`extends` 一般有两种用法：
 
-在使用 type 声明类型的时候，使用 `[]` 可以进行循环的处理
+1. 类型继承
 
 ```ts
-type Readonly<T> = {
-  readonly [P in keyof T]: T[P]
+interface Animal {
+  id: string
+  type: string
+}
+
+interface Dog {
+  name: string
 }
 ```
+
+2. 判断一个类型能不能赋值给另一个类型
+
+```ts
+// 如果 T 可以满足类型 Animal 则返回 Animal 类型，否则为 T 类型
+type IsAnimal<T> = T extends Animal ? Animal : T;
+```
+
+## infer
+
+`infer` 常用来做类型推测，一般出现在类型声明的右边。
+
 
 ## 元组相关操作
 
@@ -87,7 +104,12 @@ type tuple = ['t1', 't2', 't3']
 type l = tuple['length']
 ```
 
-获取元组每个值做为类型：
+获取元组每个值做为联合类型：
 ```ts
 type t = tuple[number]
+```
+
+获取元组的第几个元素
+```ts
+type n = tuple[1]
 ```
