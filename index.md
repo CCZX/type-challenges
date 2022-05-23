@@ -113,3 +113,7 @@ type t = tuple[number]
 ```ts
 type n = tuple[1]
 ```
+
+## 文章
+
+- https://github.com/ghaiklor/type-challenges-solutions
